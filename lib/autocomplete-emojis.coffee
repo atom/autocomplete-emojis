@@ -1,13 +1,30 @@
-AutocompleteEmojisView = require './autocomplete-emojis-view'
+EmojisProvider = require './emojis-provider.coffee'
 
 module.exports =
-  autocompleteEmojisView: null
+  editorSubscription: null
+  providers: []
+  autocomplete: null
 
-  activate: (state) ->
-    @autocompleteEmojisView = new AutocompleteEmojisView(state.autocompleteEmojisViewState)
+  activate: ->
+    atom.packages.activatePackage("autocomplete-plus")
+      .then (pkg) =>
+        @autocomplete = pkg.mainModule
+        @registerProviders()
+
+  registerProviders: ->
+    @editorSubscription = atom.workspaceView.eachEditorView (editorView) =>
+      if editorView.attached and not editorView.mini
+        provider = new EmojisProvider editorView
+
+        @autocomplete.registerProviderForEditorView provider, editorView
+
+        @providers.push provider
 
   deactivate: ->
-    @autocompleteEmojisView.destroy()
+    @editorSubscription?.off()
+    @editorSubscription = null
 
-  serialize: ->
-    autocompleteEmojisViewState: @autocompleteEmojisView.serialize()
+    @providers.forEach (provider) =>
+      @autocomplete.unregisterProvider provider
+
+    @providers = []
