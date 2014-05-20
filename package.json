@@ -1,0 +1,14 @@
+{
+  "name": "autocomplete-emojis",
+  "main": "./lib/autocomplete-emojis",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "activationEvents": ["autocomplete-emojis:toggle"],
+  "repository": "https://github.com/atom/autocomplete-emojis",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}
