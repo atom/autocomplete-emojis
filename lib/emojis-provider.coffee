@@ -1,13 +1,24 @@
-{Provider, Suggestion} = require "autocomplete-plus"
+{Provider, Suggestion} = require 'autocomplete-plus'
+fuzzaldrin = require 'fuzzaldrin'
+emoji = require 'emoji-images'
 
 module.exports =
-class ExampleProvider extends Provider
+class EmojiProvider extends Provider
+  wordRegex: /:[a-zA-Z0-9\.\/_\+-]*/g
+  possibleWords: emoji.list
   buildSuggestions: ->
-    suggestions = []
-    suggestions.push new Suggestion(this, word: "async", label: "@async")
-    suggestions.push new Suggestion(this, word: "attribute", label: "@attribute")
-    suggestions.push new Suggestion(this, word: "author", label: "@author")
-    suggestions.push new Suggestion(this, word: "beta", label: "@beta")
-    suggestions.push new Suggestion(this, word: "borrows", label: "@borrows")
-    suggestions.push new Suggestion(this, word: "bubbles", label: "@bubbles")
+    selection = @editor.getSelection()
+    prefix = @prefixOfSelection selection
+    return unless prefix.length
+
+    suggestions = @findSuggestionsForPrefix prefix
+    return unless suggestions.length
+    return suggestions
+
+  findSuggestionsForPrefix: (prefix) ->
+    words = fuzzaldrin.filter @possibleWords, prefix
+
+    suggestions = for word in words when word isnt prefix
+      new Suggestion this, word: word, prefix: prefix
+
     return suggestions
