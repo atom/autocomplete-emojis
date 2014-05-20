@@ -1,5 +1,11 @@
 # autocomplete-emojis package
 
-A short description of your package.
+[View the changelog](https://github.com/eqot/autocomplete-emojis/blob/master/CHANGELOG.md)
 
-![A screenshot of your spankin' package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+Adds path autocompletion to autocomplete+
+
+## Installation
+
+You can install autocomplete-emojis using the Preferences pane.
+
+**Please make sure you have autocomplete-plus installed as well**
