@@ -2,7 +2,7 @@
 
 [View the changelog](https://github.com/eqot/autocomplete-emojis/blob/master/CHANGELOG.md)
 
-Adds path autocompletion to autocomplete+
+Adds emoji autocompletion to autocomplete+
 
 ## Installation
 
