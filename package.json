@@ -5,7 +5,7 @@
   "description": "Adds emoji autocompletion to autocomplete+",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eqot/autocomplete-emojis"
+    "url": "https://github.com/eqot/atom-autocomplete-emojis"
   },
   "license": "MIT",
   "engines": {
