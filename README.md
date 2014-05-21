@@ -19,5 +19,5 @@ you need to change 'File Blacklist' in autocomplete-plus settings to ```.*```, o
 ## Acknowledgements
 
   * [autocomplete-plus](https://atom.io/packages/autocomplete-plus) and
-    [a tutorial to create a new suggestion provider](https://github.com/saschagehlich/autocomplete-plus/wiki/Tutorial:-Registering-and-creating-a-suggestion-provider)
+    [its tutorial to create a new suggestion provider](https://github.com/saschagehlich/autocomplete-plus/wiki/Tutorial:-Registering-and-creating-a-suggestion-provider)
     inspired me to create this package
