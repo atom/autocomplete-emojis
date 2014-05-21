@@ -2,10 +2,22 @@
 
 [View the changelog](https://github.com/eqot/autocomplete-emojis/blob/master/CHANGELOG.md)
 
-Adds emoji autocompletion to autocomplete+
+Adds emoji autocompletion to autocomplete-plus.
+
 
 ## Installation
 
 You can install autocomplete-emojis using the Preferences pane.
 
-**Please make sure you have autocomplete-plus installed as well**
+Please make sure you have [autocomplete-plus](https://atom.io/packages/autocomplete-plus) installed as well.
+
+Also please note that autocomplete-plus is disabled in \*.md files by default.
+If you would like to use autocomplete-emojis in \*.md file,
+you need to change 'File Blacklist' in autocomplete-plus settings to ```.*```, or remove ```*.md```.
+
+
+## Acknowledgements
+
+  * [autocomplete-plus](https://atom.io/packages/autocomplete-plus) and
+    [a tutorial to create a new suggestion provider](https://github.com/saschagehlich/autocomplete-plus/wiki/Tutorial:-Registering-and-creating-a-suggestion-provider)
+    inspired me to create this package

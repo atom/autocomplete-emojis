@@ -12,7 +12,7 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "autocomplete-plus": "git://github.com/saschagehlich/autocomplete-plus.git",
+    "autocomplete-plus": "git+https://github.com/saschagehlich/autocomplete-plus.git",
     "emoji-images": "^0.1.1",
     "fuzzaldrin": "~1.0.0"
   }
