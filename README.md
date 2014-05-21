@@ -1,6 +1,6 @@
 # autocomplete-emojis package
 
-[View the changelog](https://github.com/eqot/atom-autocomplete-emojis/blob/master/CHANGELOG.md)
+[View the changelog](https://github.com/eqot/autocomplete-emojis/blob/master/CHANGELOG.md)
 
 Adds emoji autocompletion to autocomplete+
 
