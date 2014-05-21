@@ -1,13 +1,12 @@
 {Provider, Suggestion} = require 'autocomplete-plus'
 fuzzaldrin = require 'fuzzaldrin'
 emoji = require 'emoji-images'
-path = require 'path'
 
 module.exports =
 class EmojiProvider extends Provider
   wordRegex: /:[a-zA-Z0-9\.\/_\+-]*/g
   possibleWords: emoji.list
-  emojiFolder: path.join path.dirname(require.resolve 'emoji-images'), 'pngs'
+  emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
   buildSuggestions: ->
     selection = @editor.getSelection()
     prefix = @prefixOfSelection selection
