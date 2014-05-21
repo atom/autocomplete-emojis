@@ -21,6 +21,10 @@ class EmojiProvider extends Provider
 
     suggestions = for word in words when word isnt prefix
       emojiImg = emoji word, @emojiFolder, 20
+      if emojiImg.match(/src="(.*\.png)"/)
+        uri = RegExp.$1
+        emojiImg = emojiImg.replace uri, decodeURIComponent(uri)
+
       new Suggestion this, word: word, prefix: prefix, label: emojiImg, renderLabelAsHtml: true
 
     return suggestions
