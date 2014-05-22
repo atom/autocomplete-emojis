@@ -4,6 +4,8 @@
 
 Adds emoji autocompletion to autocomplete-plus.
 
+![autocomplete-emojis](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/atom-autocomplete-emojis.gif)
+
 
 ## Installation
 
