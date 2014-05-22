@@ -1,5 +1,4 @@
 {WorkspaceView} = require 'atom'
-AutocompleteEmojis = require '../lib/autocomplete-emojis'
 
 # Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 #
@@ -7,24 +6,40 @@ AutocompleteEmojis = require '../lib/autocomplete-emojis'
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe "AutocompleteEmojis", ->
-  activationPromise = null
+  [activationPromise, completionDelay] = []
 
   beforeEach ->
+    # Enable live autocompletion
+    atom.config.set "autocomplete-plus.enableAutoActivation", true
+
+    # Set the completion delay
+    completionDelay = 100
+    atom.config.set "autocomplete-plus.autoActivationDelay", completionDelay
+    completionDelay += 100 # Rendering delay
+
     atom.workspaceView = new WorkspaceView
-    activationPromise = atom.packages.activatePackage('autocomplete-emojis')
+    atom.workspaceView.openSync "sample.js"
+    atom.workspaceView.simulateDomAttachment()
 
-  describe "when the autocomplete-emojis:toggle event is triggered", ->
-    it "attaches and then detaches the view", ->
-      expect(atom.workspaceView.find('.autocomplete-emojis')).not.toExist()
+    activationPromise = atom.packages.activatePackage("autocomplete-emojis")
+      .then => atom.packages.activatePackage("autocomplete-plus")
+    waitsForPromise ->
+      activationPromise
 
-      # This is an activation event, triggering it will cause the package to be
-      # activated.
-      atom.workspaceView.trigger 'autocomplete-emojis:toggle'
+  it "shows autocompletions when typing :+", ->
+    runs ->
+      editorView = atom.workspaceView.getActiveView()
+      editorView.attachToDom()
+      editor = editorView.getEditor()
 
-      waitsForPromise ->
-        activationPromise
+      expect(editorView.find(".autocomplete-plus")).not.toExist()
 
-      runs ->
-        expect(atom.workspaceView.find('.autocomplete-emojis')).toExist()
-        atom.workspaceView.trigger 'autocomplete-emojis:toggle'
-        expect(atom.workspaceView.find('.autocomplete-emojis')).not.toExist()
+      editor.moveCursorToBottom()
+      editor.insertText ":"
+      editor.insertText "+"
+
+      advanceClock completionDelay
+
+      expect(editorView.find(".autocomplete-plus")).toExist()
+      expect(editorView.find(".autocomplete-plus span.word:eq(0)")).toHaveText ":+1:"
+      expect(editorView.find(".autocomplete-plus span.label:eq(0)").html()).toMatch /\+1\.png/
