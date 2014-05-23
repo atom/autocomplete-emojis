@@ -6,7 +6,7 @@ module.exports =
   autocomplete: null
 
   activate: ->
-    atom.packages.activatePackage("autocomplete-plus")
+    atom.packages.activatePackage 'autocomplete-plus'
       .then (pkg) =>
         @autocomplete = pkg.mainModule
         @registerProviders()

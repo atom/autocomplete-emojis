@@ -17,7 +17,7 @@ describe "AutocompleteEmojis", ->
     atom.config.set "autocomplete-plus.autoActivationDelay", completionDelay
     completionDelay += 100 # Rendering delay
 
-    atom.workspaceView = new WorkspaceView
+    atom.workspaceView = new WorkspaceView()
     atom.workspaceView.openSync "sample.js"
     atom.workspaceView.simulateDomAttachment()
 
