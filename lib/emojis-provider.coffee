@@ -7,6 +7,7 @@ class EmojiProvider extends Provider
   wordRegex: /:[a-zA-Z0-9\.\/_\+-]*/g
   possibleWords: emoji.list
   emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
+
   buildSuggestions: ->
     selection = @editor.getSelection()
     prefix = @prefixOfSelection selection
@@ -21,9 +22,9 @@ class EmojiProvider extends Provider
 
     suggestions = for word in words when word isnt prefix
       emojiImg = emoji word, @emojiFolder, 20
-      if emojiImg.match(/src="(.*\.png)"/)
+      if emojiImg.match /src="(.*\.png)"/
         uri = RegExp.$1
-        emojiImg = emojiImg.replace uri, decodeURIComponent(uri)
+        emojiImg = emojiImg.replace uri, decodeURIComponent uri
 
       new Suggestion this, word: word, prefix: prefix, label: emojiImg, renderLabelAsHtml: true
 
