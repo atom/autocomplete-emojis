@@ -1,4 +1,5 @@
 EmojisProvider = require './emojis-provider.coffee'
+EmojiCheatSheet = require './emoji-cheat-sheet.coffee'
 
 module.exports =
   editorSubscription: null
@@ -6,6 +7,8 @@ module.exports =
   autocomplete: null
 
   activate: ->
+    atom.workspaceView.command 'autocomplete-emojis:show-cheat-sheet', => EmojiCheatSheet.show()
+
     atom.packages.activatePackage 'autocomplete-plus'
       .then (pkg) =>
         @autocomplete = pkg.mainModule
