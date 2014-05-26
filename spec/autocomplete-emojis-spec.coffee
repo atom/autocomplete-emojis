@@ -5,6 +5,8 @@
 # To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
+EmojiCheatSheet = require '../lib/emoji-cheat-sheet.coffee'
+
 describe "AutocompleteEmojis", ->
   [activationPromise, completionDelay] = []
 
@@ -43,3 +45,11 @@ describe "AutocompleteEmojis", ->
       expect(editorView.find(".autocomplete-plus")).toExist()
       expect(editorView.find(".autocomplete-plus span.word:eq(0)")).toHaveText ":+1:"
       expect(editorView.find(".autocomplete-plus span.label:eq(0)").html()).toMatch /\+1\.png/
+
+  describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
+    it "opens Emoji Cheat Sheet in browser", ->
+      spyOn EmojiCheatSheet, 'openUrlInBrowser'
+
+      atom.workspaceView.trigger 'autocomplete-emojis:show-cheat-sheet'
+
+      expect(EmojiCheatSheet.openUrlInBrowser).toHaveBeenCalledWith 'http://www.emoji-cheat-sheet.com/'

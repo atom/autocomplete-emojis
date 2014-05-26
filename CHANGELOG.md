@@ -1,3 +1,8 @@
+0.4.0 (May 27 2014)
+===================
+
+* Add ```autocomplete-emojis:show-cheat-sheet``` command to open 'Emoji Cheat Sheet' in browser
+
 0.3.0 (May 22 2014)
 ===================
 

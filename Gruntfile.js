@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         globals: [
           'console', 'require', 'module',
           'atom',
-          'describe', 'it', 'expect', 'beforeEach', 'waitsForPromise', 'runs', 'advanceClock'
+          'describe', 'it', 'expect', 'beforeEach', 'waitsForPromise', 'runs', 'advanceClock', 'spyOn'
         ]
       },
       target: {
