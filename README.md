@@ -20,8 +20,15 @@ you need to change 'File Blacklist' in autocomplete-plus settings to ```.*```, o
 ![autocomplete-plus-settins](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/autocomplete-plus-settins.png)
 
 
+## Features
+
+* Shows autocompletion suggestions for emojis when typing ```:```
+* Opens [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) in browser
+  when you run the ```autocomplete-emojis:show-cheat-sheet``` command
+
+
 ## Acknowledgements
 
-  * [autocomplete-plus](https://atom.io/packages/autocomplete-plus) and
-    [its tutorial to create a new suggestion provider](https://github.com/saschagehlich/autocomplete-plus/wiki/Tutorial:-Registering-and-creating-a-suggestion-provider)
-    inspired me to create this package
+* [autocomplete-plus](https://atom.io/packages/autocomplete-plus) and
+  [its tutorial to create a new suggestion provider](https://github.com/saschagehlich/autocomplete-plus/wiki/Tutorial:-Registering-and-creating-a-suggestion-provider)
+  inspired me to create this package
