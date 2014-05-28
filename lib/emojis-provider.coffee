@@ -6,8 +6,7 @@ module.exports =
 class EmojiProvider extends Provider
   wordRegex: /:[a-zA-Z0-9\.\/_\+-]*/g
   possibleWords: emoji.list
-  emojiLocal: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
-  emojiHost: 'https://raw.githubusercontent.com/arvida/emoji-cheat-sheet.com/master/public/graphics/emojis'
+  emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
 
   buildSuggestions: ->
     selection = @editor.getSelection()
@@ -21,10 +20,8 @@ class EmojiProvider extends Provider
   findSuggestionsForPrefix: (prefix) ->
     words = fuzzaldrin.filter @possibleWords, prefix
 
-    uriToEmoji = if atom.config.get 'autocomplete-emojis.getImagesFromCheatSheetSite' then @emojiHost else @emojiLocal
-
     suggestions = for word in words when word isnt prefix
-      emojiImg = emoji word, uriToEmoji, 20
+      emojiImg = emoji word, @emojiFolder, 20
       if emojiImg.match /src="(.*\.png)"/
         uri = RegExp.$1
         emojiImg = emojiImg.replace uri, decodeURIComponent uri

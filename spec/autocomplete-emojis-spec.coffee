@@ -19,9 +19,6 @@ describe "AutocompleteEmojis", ->
     atom.config.set "autocomplete-plus.autoActivationDelay", completionDelay
     completionDelay += 100 # Rendering delay
 
-    # Get images locally instead of cheat sheet site
-    atom.config.set 'autocomplete-emojis.getImagesFromCheatSheetSite', false
-
     atom.workspaceView = new WorkspaceView()
     atom.workspaceView.openSync "sample.js"
     atom.workspaceView.simulateDomAttachment()
@@ -48,29 +45,6 @@ describe "AutocompleteEmojis", ->
       expect(editorView.find(".autocomplete-plus")).toExist()
       expect(editorView.find(".autocomplete-plus span.word:eq(0)")).toHaveText ":+1:"
       expect(editorView.find(".autocomplete-plus span.label:eq(0)").html()).toMatch /\+1\.png/
-
-  describe 'when getImagesFromCheatSheetSite is enabled', ->
-    it "shows autocompletions with right URL when typing :+", ->
-      runs ->
-        # Get images from cheat sheet site
-        atom.config.set 'autocomplete-emojis.getImagesFromCheatSheetSite', true
-
-        editorView = atom.workspaceView.getActiveView()
-        editorView.attachToDom()
-        editor = editorView.getEditor()
-
-        expect(editorView.find(".autocomplete-plus")).not.toExist()
-
-        editor.moveCursorToBottom()
-        editor.insertText ":"
-        editor.insertText "+"
-
-        advanceClock completionDelay
-
-        expect(editorView.find(".autocomplete-plus")).toExist()
-        expect(editorView.find(".autocomplete-plus span.word:eq(0)")).toHaveText ":+1:"
-        expect(editorView.find(".autocomplete-plus span.label:eq(0)").html()).toMatch /\+1\.png/
-        expect(editorView.find(".autocomplete-plus span.label:eq(0)").html()).toMatch /https:\/\/raw\.githubusercontent\.com\/arvida\/emoji-cheat-sheet\.com\/master\/public\/graphics\/emojis/
 
   describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
     it "opens Emoji Cheat Sheet in browser", ->
