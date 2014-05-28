@@ -17,7 +17,7 @@ Also please note that autocomplete-plus is disabled in \*.md files by default.
 If you would like to use autocomplete-emojis in \*.md file,
 you need to change 'File Blacklist' in autocomplete-plus settings to ```.*```, or remove ```*.md```.
 
-![autocomplete-plus-settins](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/autocomplete-plus-settins.png)
+![autocomplete-plus-settings](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/autocomplete-plus-settins.png)
 
 
 ## Features
