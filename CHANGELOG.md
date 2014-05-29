@@ -1,3 +1,8 @@
+0.5.0 (May 30 2014)
+===================
+
+* Add file whitelisting option (glob supported, separated by commas)
+
 0.4.0 (May 27 2014)
 ===================
 
