@@ -25,6 +25,7 @@ you need to change 'File Blacklist' in autocomplete-plus settings to ```.*```, o
 * Shows autocompletion suggestions for emojis when typing ```:```
 * Opens [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) in browser
   when you run the ```autocomplete-emojis:show-cheat-sheet``` command
+* File whiltelisting
 
 
 ## Acknowledgements

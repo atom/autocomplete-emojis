@@ -2,6 +2,9 @@ EmojisProvider = require './emojis-provider.coffee'
 EmojiCheatSheet = require './emoji-cheat-sheet.coffee'
 
 module.exports =
+  configDefaults:
+    fileWhitelist: "*.md"
+
   editorSubscription: null
   providers: []
   autocomplete: null

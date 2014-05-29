@@ -1,6 +1,8 @@
 {Provider, Suggestion} = require 'autocomplete-plus'
 fuzzaldrin = require 'fuzzaldrin'
 emoji = require 'emoji-images'
+path = require 'path'
+minimatch = require 'minimatch'
 
 module.exports =
 class EmojiProvider extends Provider
@@ -9,6 +11,8 @@ class EmojiProvider extends Provider
   emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
 
   buildSuggestions: ->
+    return unless @currentFileWhitelisted()
+
     selection = @editor.getSelection()
     prefix = @prefixOfSelection selection
     return unless prefix.length
@@ -16,6 +20,18 @@ class EmojiProvider extends Provider
     suggestions = @findSuggestionsForPrefix prefix
     return unless suggestions.length
     return suggestions
+
+  currentFileWhitelisted: ->
+    whitelist = (atom.config.get('autocomplete-emojis.fileWhitelist') or '')
+      .split ','
+      .map (s) -> s.trim()
+
+    fileName = path.basename @editor.getBuffer().getPath()
+    for whitelistGlob in whitelist
+      if minimatch fileName, whitelistGlob
+        return true
+
+    return false
 
   findSuggestionsForPrefix: (prefix) ->
     words = fuzzaldrin.filter @possibleWords, prefix
