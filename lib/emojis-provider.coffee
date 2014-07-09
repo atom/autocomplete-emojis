@@ -42,6 +42,6 @@ class EmojiProvider extends Provider
         uri = RegExp.$1
         emojiImg = emojiImg.replace uri, decodeURIComponent uri
 
-      new Suggestion this, word: word, prefix: prefix, label: emojiImg, renderLabelAsHtml: true
+      new Suggestion this, word: word, prefix: prefix, label: emojiImg, renderLabelAsHtml: true, className: 'emoji'
 
     return suggestions
