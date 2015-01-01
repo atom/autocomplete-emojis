@@ -1,3 +1,9 @@
+0.7.0 (Jan 2 2015)
+==================
+
+* Update code to follow the latest atom and autocomplete-plus
+* Fix a bug that emoji icons were dimmed
+
 0.6.0 (Jul 10 2014)
 ===================
 
