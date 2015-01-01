@@ -1,4 +1,4 @@
-# autocomplete-emojis package
+# autocomplete+ emojis suggestions [![Build Status](https://travis-ci.org/eqot/autocomplete-emojis.svg?branch=master)](https://travis-ci.org/eqot/autocomplete-emojis)
 
 [View the changelog](https://github.com/eqot/autocomplete-emojis/blob/master/CHANGELOG.md)
 
