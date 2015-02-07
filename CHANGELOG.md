@@ -1,3 +1,8 @@
+1.0.0 (Feb 8 2015)
+==================
+
+* Update code to use new autocomplete-plus API
+
 0.7.1 (Jan 4 2015)
 ==================
 
