@@ -1,9 +1,9 @@
-Shell = require 'shell'
+Shell = require('shell')
 
 module.exports =
 class EmojiCheatSheet
   @show: ->
-    @openUrlInBrowser 'http://www.emoji-cheat-sheet.com/'
+    @openUrlInBrowser('http://www.emoji-cheat-sheet.com/')
 
   @openUrlInBrowser: (url) ->
-    Shell.openExternal url
+    Shell.openExternal(url)

@@ -1,68 +1,81 @@
-EmojiCheatSheet = require '../lib/emoji-cheat-sheet'
+EmojiCheatSheet = require('../lib/emoji-cheat-sheet')
 
-describe "AutocompleteEmojis", ->
-  [workspaceElement, completionDelay, editor, editorView, autocompleteManager, mainModule] = []
+describe 'Autocomplete Emojis', ->
+  [workspaceElement, completionDelay, editor, editorView, emojisMain, autocompleteMain, autocompleteManager] = []
 
   beforeEach ->
-    # Set to live completion
-    atom.config.set 'autocomplete-plus.enableAutoActivation', true
-
-    # Set the completion delay
-    completionDelay = 100
-    atom.config.set 'autocomplete-plus.autoActivationDelay', completionDelay
-    completionDelay += 100 # Rendering delay
-
-    # Set the blacklist of autocomplete-plus
-    atom.config.set 'autocomplete-plus.fileBlacklist', '.*'
-
-    # Set the whitelist
-    atom.config.set 'autocomplete-emojis.fileWhitelist', '*.md'
+    runs ->
+      # Set to live completion
+      atom.config.set('autocomplete-plus.enableAutoActivation', true)
+      # Set the completion delay
+      completionDelay = 100
+      atom.config.set('autocomplete-plus.autoActivationDelay', completionDelay)
+      completionDelay += 100 # Rendering delay
+      workspaceElement = atom.views.getView(atom.workspace)
+      jasmine.attachToDOM(workspaceElement)
+      autocompleteMain = atom.packages.loadPackage('autocomplete-plus').mainModule
+      spyOn(autocompleteMain, 'consumeProvider').andCallThrough()
+      emojisMain = atom.packages.loadPackage('autocomplete-emojis').mainModule
+      spyOn(emojisMain, 'provide').andCallThrough()
 
     waitsForPromise ->
       atom.workspace.open('sample.md').then (e) ->
         editor = e
         editorView = atom.views.getView(editor)
 
+    waitsForPromise ->
+      atom.packages.activatePackage('autocomplete-plus')
+
+    waitsFor ->
+      autocompleteMain.autocompleteManager?.ready
+
     runs ->
-      workspaceElement = atom.views.getView(atom.workspace)
-      jasmine.attachToDOM(workspaceElement)
+      autocompleteManager = autocompleteMain.autocompleteManager
+      spyOn(autocompleteManager, 'findSuggestions').andCallThrough()
+      spyOn(autocompleteManager, 'displaySuggestions').andCallThrough()
+      spyOn(autocompleteManager, 'showSuggestionList').andCallThrough()
+      spyOn(autocompleteManager, 'hideSuggestionList').andCallThrough()
 
-    waitsForPromise -> atom.packages.activatePackage('autocomplete-plus').then (a) ->
-      mainModule = a.mainModule
-      autocompleteManager = mainModule.autocompleteManagers[0]
+    waitsForPromise ->
+      atom.packages.activatePackage('autocomplete-emojis')
 
-    waitsForPromise -> atom.packages.activatePackage('autocomplete-emojis')
+    waitsFor ->
+      emojisMain.provide.calls.length is 1
 
-  describe "when autocomplete-plus is enabled", ->
-    it "shows autocompletions in whitelisted file when typing :+", ->
+    waitsFor ->
+      autocompleteMain.consumeProvider.calls.length is 1
+
+  afterEach ->
+    jasmine.unspy(autocompleteMain, 'consumeProvider')
+    jasmine.unspy(emojisMain, 'provide')
+    jasmine.unspy(autocompleteManager, 'findSuggestions')
+    jasmine.unspy(autocompleteManager, 'displaySuggestions')
+    jasmine.unspy(autocompleteManager, 'showSuggestionList')
+    jasmine.unspy(autocompleteManager, 'hideSuggestionList')
+
+  describe 'when autocomplete-plus is enabled', ->
+    it 'shows autocompletions when typing .+', ->
       runs ->
         expect(editorView.querySelector('.autocomplete-plus')).not.toExist()
 
         editor.moveToBottom()
-        editor.insertText ':'
-        editor.insertText '+'
+        editor.insertText(':')
+        editor.insertText('+')
 
-        advanceClock completionDelay
+        advanceClock(completionDelay)
 
+      waitsFor ->
+        autocompleteManager.displaySuggestions.calls.length is 1
+
+      runs ->
         expect(editorView.querySelector('.autocomplete-plus')).toExist()
         expect(editorView.querySelector('.autocomplete-plus span.word')).toHaveText ':+1:'
-        expect(editorView.querySelector('.autocomplete-plus span.label').innerHTML).toMatch /\+1\.png/
+        expect(editorView.querySelector('.autocomplete-plus span.completion-label').innerHTML).toMatch /\+1\.png/
 
-    it "not shows autocompletions in non-whitelisted file when typing :", ->
-      runs ->
-        atom.config.set 'autocomplete-emojis.fileWhitelist', '*.js'
+  describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
+    it 'opens Emoji Cheat Sheet in browser', ->
+      spyOn EmojiCheatSheet, 'openUrlInBrowser'
 
-        editor.moveToBottom()
-        editor.insertText ':'
+      atom.commands.dispatch workspaceElement, 'autocomplete-emojis:show-cheat-sheet'
 
-        advanceClock completionDelay
-
-        expect(editorView.querySelector('.autocomplete-plus')).not.toExist()
-
-    describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
-      it "opens Emoji Cheat Sheet in browser", ->
-        spyOn EmojiCheatSheet, 'openUrlInBrowser'
-
-        atom.commands.dispatch workspaceElement, 'autocomplete-emojis:show-cheat-sheet'
-
-        expect(EmojiCheatSheet.openUrlInBrowser).toHaveBeenCalledWith 'http://www.emoji-cheat-sheet.com/'
+      expect(EmojiCheatSheet.openUrlInBrowser).toHaveBeenCalledWith 'http://www.emoji-cheat-sheet.com/'

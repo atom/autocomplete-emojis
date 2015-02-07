@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "emoji-images": "^0.1.1",
-    "fuzzaldrin": "^2.1.0",
-    "minimatch": "^2.0.1"
+    "fuzzaldrin": "^2.1.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -23,5 +22,12 @@
     "grunt-contrib-watch": "^0.6.1",
     "load-grunt-tasks": "^2.0.0",
     "time-grunt": "^1.0.0"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "1.0.0": "provide"
+      }
+    }
   }
 }

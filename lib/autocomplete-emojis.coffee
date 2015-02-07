@@ -1,38 +1,22 @@
-EmojiCheatSheet = require './emoji-cheat-sheet'
-
 module.exports =
-  configDefaults:
-    fileWhitelist: "*.md"
-
-  editorSubscription: null
-  providers: []
-  autocomplete: null
+  provider: null
+  ready: false
 
   activate: ->
+    @ready = true
+
     atom.commands.add 'atom-workspace',
       'autocomplete-emojis:show-cheat-sheet': ->
-        EmojiCheatSheet.show()
-
-    atom.packages.activatePackage('autocomplete-plus').then (pkg) =>
-      @autocomplete = pkg.mainModule
-      return unless @autocomplete?
-      Provider = (require './emojis-provider').ProviderClass(@autocomplete.Provider, @autocomplete.Suggestion)
-      return unless Provider?
-      @editorSubscription = atom.workspace.observeTextEditors((editor) => @registerProvider(Provider, editor))
-
-  registerProvider: (Provider, editor) ->
-    return unless Provider?
-    return unless editor?
-    editorView = atom.views.getView(editor)
-    return unless editorView?
-    if not editorView.mini
-      provider = new Provider(editor)
-      @autocomplete.registerProviderForEditor(provider, editor)
-      @providers.push(provider)
+        require('./emoji-cheat-sheet').show()
 
   deactivate: ->
-    @editorSubscription?.dispose()
-    @editorSubscription = null
+    @provider = null
 
-    @providers.forEach (provider) => @autocomplete.unregisterProvider(provider)
-    @providers = []
+  getProvider: ->
+    return @provider if @provider?
+    EmojisProvider = require('./emojis-provider')
+    @provider = new EmojisProvider()
+    return @provider
+
+  provide: ->
+    return {provider: @getProvider()}

@@ -1,47 +1,56 @@
-fuzzaldrin = require 'fuzzaldrin'
-emoji = require 'emoji-images'
-path = require 'path'
-minimatch = require 'minimatch'
+{Range}  = require('atom')
+fuzzaldrin = require('fuzzaldrin')
+emoji = require('emoji-images')
 
 module.exports =
-ProviderClass: (Provider, Suggestion) ->
-  class EmojisProvider extends Provider
-    wordRegex: /:[a-zA-Z0-9\.\/_\+-]*/g
-    possibleWords: emoji.list
-    emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
+class EmojisProvider
+  id: 'autocomplete-emojis-emojisprovider'
+  selector: '*'
+  wordRegex: /:[a-zA-Z0-9_\+-]*/g
+  emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
 
-    buildSuggestions: ->
-      return unless @currentFileWhitelisted()
+  requestHandler: (options = {}) =>
+    return [] unless options.editor? and options.buffer? and options.cursor?
 
-      selection = @editor.getSelection()
-      prefix = @prefixOfSelection selection
-      return unless prefix.length
+    prefix = @prefixForCursor(options.editor, options.buffer, options.cursor, options.position)
+    return [] unless prefix.length
 
-      suggestions = @findSuggestionsForPrefix prefix
-      return unless suggestions.length
-      return suggestions
+    suggestions = @findSuggestionsForPrefix(prefix)
+    return [] unless suggestions?.length
+    return suggestions
 
-    currentFileWhitelisted: ->
-      whitelist = (atom.config.get('autocomplete-emojis.fileWhitelist') or '')
-        .split ','
-        .map (s) -> s.trim()
+  prefixForCursor: (editor, buffer, cursor, position) =>
+    return '' unless buffer? and cursor?
+    start = @getBeginningOfCurrentWordBufferPosition(editor, position, {wordRegex: @wordRegex})
+    end = cursor.getBufferPosition()
+    return '' unless start? and end?
+    buffer.getTextInRange(new Range(start, end))
 
-      fileName = path.basename @editor.getBuffer().getPath()
-      for whitelistGlob in whitelist
-        if minimatch fileName, whitelistGlob
-          return true
+  getBeginningOfCurrentWordBufferPosition: (editor, position, options = {}) ->
+    return unless position?
+    currentBufferPosition = position
+    scanRange = [[currentBufferPosition.row, 0], currentBufferPosition]
+    beginningOfWordPosition = null
+    editor.backwardsScanInBufferRange (options.wordRegex), scanRange, ({range, stop}) ->
+      if range.end.isGreaterThanOrEqual(currentBufferPosition)
+        beginningOfWordPosition = range.start
+        stop()
+    beginningOfWordPosition
 
-      return false
+  findSuggestionsForPrefix: (prefix) ->
+    words = fuzzaldrin.filter(emoji.list, prefix)
 
-    findSuggestionsForPrefix: (prefix) ->
-      words = fuzzaldrin.filter @possibleWords, prefix
+    suggestions = for word in words
+      emojiImageElement = emoji(word, @emojiFolder, 20)
+      if emojiImageElement.match(/src="(.*\.png)"/)
+        uri = RegExp.$1
+        emojiImageElement = emojiImageElement.replace(uri, decodeURIComponent(uri))
 
-      suggestions = for word in words when word isnt prefix
-        emojiImg = emoji word, @emojiFolder, 20
-        if emojiImg.match /src="(.*\.png)"/
-          uri = RegExp.$1
-          emojiImg = emojiImg.replace uri, decodeURIComponent uri
+      suggestion =
+        word: word
+        prefix: prefix
+        label: emojiImageElement
+        renderLabelAsHtml: true
+      suggestion
 
-        new Suggestion this, word: word, prefix: prefix, label: emojiImg, renderLabelAsHtml: true, className: 'emoji'
-
-      return suggestions
+    return suggestions
