@@ -1,81 +1,85 @@
-EmojiCheatSheet = require('../lib/emoji-cheat-sheet')
+emojiCheatSheet = require('../lib/emoji-cheat-sheet')
 
-describe 'Autocomplete Emojis', ->
-  [workspaceElement, completionDelay, editor, editorView, emojisMain, autocompleteMain, autocompleteManager] = []
+packagesToTest =
+  gfm:
+    name: 'language-gfm'
+    file: 'test.md'
+
+describe "Emojis autocompletions", ->
+  [editor, provider] = []
+
+  getCompletions = ->
+    cursor = editor.getLastCursor()
+    start = cursor.getBeginningOfCurrentWordBufferPosition()
+    end = cursor.getBufferPosition()
+    prefix = editor.getTextInRange([start, end])
+    request =
+      editor: editor
+      bufferPosition: end
+      scopeDescriptor: cursor.getScopeDescriptor()
+      prefix: prefix
+    provider.getSuggestions(request)
 
   beforeEach ->
-    runs ->
-      # Set to live completion
-      atom.config.set('autocomplete-plus.enableAutoActivation', true)
-      # Set the completion delay
-      completionDelay = 100
-      atom.config.set('autocomplete-plus.autoActivationDelay', completionDelay)
-      completionDelay += 100 # Rendering delay
-      workspaceElement = atom.views.getView(atom.workspace)
-      jasmine.attachToDOM(workspaceElement)
-      autocompleteMain = atom.packages.loadPackage('autocomplete-plus').mainModule
-      spyOn(autocompleteMain, 'consumeProvider').andCallThrough()
-      emojisMain = atom.packages.loadPackage('autocomplete-emojis').mainModule
-      spyOn(emojisMain, 'provide').andCallThrough()
-
-    waitsForPromise ->
-      atom.workspace.open('sample.md').then (e) ->
-        editor = e
-        editorView = atom.views.getView(editor)
-
-    waitsForPromise ->
-      atom.packages.activatePackage('autocomplete-plus')
-
-    waitsFor ->
-      autocompleteMain.autocompleteManager?.ready
+    waitsForPromise -> atom.packages.activatePackage('autocomplete-emojis')
 
     runs ->
-      autocompleteManager = autocompleteMain.autocompleteManager
-      spyOn(autocompleteManager, 'findSuggestions').andCallThrough()
-      spyOn(autocompleteManager, 'displaySuggestions').andCallThrough()
-      spyOn(autocompleteManager, 'showSuggestionList').andCallThrough()
-      spyOn(autocompleteManager, 'hideSuggestionList').andCallThrough()
+      provider = atom.packages.getActivePackage('autocomplete-emojis').mainModule.getProvider()
 
-    waitsForPromise ->
-      atom.packages.activatePackage('autocomplete-emojis')
+  Object.keys(packagesToTest).forEach (packageLabel) ->
+    describe "#{packageLabel} files", ->
+      beforeEach ->
+        waitsForPromise -> atom.packages.activatePackage(packagesToTest[packageLabel].name)
+        waitsForPromise -> atom.workspace.open(packagesToTest[packageLabel].file)
+        runs -> editor = atom.workspace.getActiveTextEditor()
 
-    waitsFor ->
-      emojisMain.provide.calls.length is 1
+      it "returns no completions without a prefix", ->
+        editor.setText('')
+        expect(getCompletions().length).toBe 0
 
-    waitsFor ->
-      autocompleteMain.consumeProvider.calls.length is 1
+      it "returns no completions with an improper prefix", ->
+        editor.setText(':')
+        editor.setCursorBufferPosition([0, 0])
+        expect(getCompletions().length).toBe 0
+        editor.setCursorBufferPosition([0, 1])
+        expect(getCompletions().length).toBe 0
 
-  afterEach ->
-    jasmine.unspy(autocompleteMain, 'consumeProvider')
-    jasmine.unspy(emojisMain, 'provide')
-    jasmine.unspy(autocompleteManager, 'findSuggestions')
-    jasmine.unspy(autocompleteManager, 'displaySuggestions')
-    jasmine.unspy(autocompleteManager, 'showSuggestionList')
-    jasmine.unspy(autocompleteManager, 'hideSuggestionList')
+        editor.setText(':*')
+        editor.setCursorBufferPosition([0, 1])
+        expect(getCompletions().length).toBe 0
 
-  describe 'when autocomplete-plus is enabled', ->
-    it 'shows autocompletions when typing .+', ->
-      runs ->
-        expect(editorView.querySelector('.autocomplete-plus')).not.toExist()
+      it "autocompletes emojis with a proper prefix", ->
+        editor.setText """
+          :sm
+        """
+        editor.setCursorBufferPosition([0, 3])
+        completions = getCompletions()
+        expect(completions.length).toBe 47
+        expect(completions[0].text).toBe ':smirk:'
+        expect(completions[0].replacementPrefix).toBe ':sm'
+        expect(completions[0].rightLabelHTML).toMatch /smirk\.png/
+        expect(completions[1].text).toBe ':smile:'
+        expect(completions[1].replacementPrefix).toBe ':sm'
+        expect(completions[1].rightLabelHTML).toMatch /smile\.png/
 
-        editor.moveToBottom()
-        editor.insertText(':')
-        editor.insertText('+')
-
-        advanceClock(completionDelay)
-
-      waitsFor ->
-        autocompleteManager.displaySuggestions.calls.length is 1
-
-      runs ->
-        expect(editorView.querySelector('.autocomplete-plus')).toExist()
-        expect(editorView.querySelector('.autocomplete-plus span.word')).toHaveText ':+1:'
-        expect(editorView.querySelector('.autocomplete-plus span.completion-label').innerHTML).toMatch /\+1\.png/
+        editor.setText """
+          :+
+        """
+        editor.setCursorBufferPosition([0, 2])
+        completions = getCompletions()
+        expect(completions.length).toBe 1
+        expect(completions[0].text).toBe ':+1:'
+        expect(completions[0].replacementPrefix).toBe ':+'
+        expect(completions[0].rightLabelHTML).toMatch /\+1\.png/
 
   describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
+    workspaceElement = null
+    beforeEach ->
+      workspaceElement = atom.views.getView(atom.workspace)
+
     it 'opens Emoji Cheat Sheet in browser', ->
-      spyOn EmojiCheatSheet, 'openUrlInBrowser'
+      spyOn emojiCheatSheet, 'openUrlInBrowser'
 
       atom.commands.dispatch workspaceElement, 'autocomplete-emojis:show-cheat-sheet'
 
-      expect(EmojiCheatSheet.openUrlInBrowser).toHaveBeenCalledWith 'http://www.emoji-cheat-sheet.com/'
+      expect(emojiCheatSheet.openUrlInBrowser).toHaveBeenCalledWith 'http://www.emoji-cheat-sheet.com/'

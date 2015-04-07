@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "engines": {
-    "atom": ">0.50.0"
+    "atom": ">=0.174.0 <2.0.0"
   },
   "dependencies": {
     "emoji-images": "^0.1.1",
@@ -20,13 +20,13 @@
     "grunt-apm": "0.0.1",
     "grunt-coffee-jshint": "^0.2.1",
     "grunt-contrib-watch": "^0.6.1",
-    "load-grunt-tasks": "^2.0.0",
+    "load-grunt-tasks": "^3.1.0",
     "time-grunt": "^1.0.0"
   },
   "providedServices": {
     "autocomplete.provider": {
       "versions": {
-        "1.0.0": "provide"
+        "2.0.0": "getProvider"
       }
     }
   }
