@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     coffee_jshint: {
       options: {
         globals: [
-          'console', 'require', 'module',
+          'console', 'require', 'module', '__dirname',
           'atom',
           'jasmine', 'describe', 'it', 'expect',
           'beforeEach', 'afterEach', 'waitsFor', 'waitsForPromise',

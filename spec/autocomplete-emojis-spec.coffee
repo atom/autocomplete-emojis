@@ -26,6 +26,8 @@ describe "Emojis autocompletions", ->
     runs ->
       provider = atom.packages.getActivePackage('autocomplete-emojis').mainModule.getProvider()
 
+    waitsFor -> Object.keys(provider.properties).length > 0
+
   Object.keys(packagesToTest).forEach (packageLabel) ->
     describe "#{packageLabel} files", ->
       beforeEach ->
@@ -54,23 +56,27 @@ describe "Emojis autocompletions", ->
         """
         editor.setCursorBufferPosition([0, 3])
         completions = getCompletions()
-        expect(completions.length).toBe 47
-        expect(completions[0].text).toBe ':smirk:'
-        expect(completions[0].replacementPrefix).toBe ':sm'
-        expect(completions[0].rightLabelHTML).toMatch /smirk\.png/
-        expect(completions[1].text).toBe ':smile:'
-        expect(completions[1].replacementPrefix).toBe ':sm'
-        expect(completions[1].rightLabelHTML).toMatch /smile\.png/
+        expect(completions.length).toBe 96
+        expect(completions[ 0].text).toBe '😄'
+        expect(completions[ 0].replacementPrefix).toBe ':sm'
+        expect(completions[49].text).toBe ':smirk:'
+        expect(completions[49].replacementPrefix).toBe ':sm'
+        expect(completions[49].rightLabelHTML).toMatch /smirk\.png/
+        expect(completions[50].text).toBe ':smile:'
+        expect(completions[50].replacementPrefix).toBe ':sm'
+        expect(completions[50].rightLabelHTML).toMatch /smile\.png/
 
         editor.setText """
           :+
         """
         editor.setCursorBufferPosition([0, 2])
         completions = getCompletions()
-        expect(completions.length).toBe 1
-        expect(completions[0].text).toBe ':+1:'
+        expect(completions.length).toBe 2
+        expect(completions[0].text).toBe '👍'
         expect(completions[0].replacementPrefix).toBe ':+'
-        expect(completions[0].rightLabelHTML).toMatch /\+1\.png/
+        expect(completions[1].text).toBe ':+1:'
+        expect(completions[1].replacementPrefix).toBe ':+'
+        expect(completions[1].rightLabelHTML).toMatch /\+1\.png/
 
   describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
     workspaceElement = null
