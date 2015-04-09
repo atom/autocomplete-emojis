@@ -78,6 +78,20 @@ describe "Emojis autocompletions", ->
         expect(completions[1].replacementPrefix).toBe ':+'
         expect(completions[1].rightLabelHTML).toMatch /\+1\.png/
 
+      it "autocompletes markdown emojis with '::'", ->
+        editor.setText """
+          ::sm
+        """
+        editor.setCursorBufferPosition([0, 4])
+        completions = getCompletions()
+        expect(completions.length).toBe 47
+        expect(completions[0].text).toBe ':smirk:'
+        expect(completions[0].replacementPrefix).toBe '::sm'
+        expect(completions[0].rightLabelHTML).toMatch /smirk\.png/
+        expect(completions[1].text).toBe ':smile:'
+        expect(completions[1].replacementPrefix).toBe '::sm'
+        expect(completions[1].rightLabelHTML).toMatch /smile\.png/
+
   describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
     workspaceElement = null
     beforeEach ->

@@ -6,7 +6,7 @@ emoji = require('emoji-images')
 module.exports =
   selector: '.source.gfm, .text.html, .text.plain, .comment, .string'
 
-  wordRegex: /:[\w\d_\+-]+$/
+  wordRegex: /::?[\w\d_\+-]+$/
   emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
   properties: {}
   keys: []
@@ -22,10 +22,18 @@ module.exports =
     prefix = @getPrefix(editor, bufferPosition)
     return [] unless prefix?.length >= 2
 
-    unicodeEmojis = @getUnicodeEmojiSuggestions(prefix)
-    markdownEmojis = @getMarkdownEmojiSuggestions(prefix)
+    if prefix.charAt(1) is ':'
+      isMarkdownEmojiOnly = true
+      replacementPrefix = prefix
+      prefix = prefix.slice(1)
 
-    return unicodeEmojis.concat(markdownEmojis)
+    if atom.config.get('autocomplete-emojis.enableUnicodeEmoji') && not isMarkdownEmojiOnly
+      unicodeEmojis = @getUnicodeEmojiSuggestions(prefix)
+
+    if atom.config.get('autocomplete-emojis.enableMarkdownEmoji')
+      markdownEmojis = @getMarkdownEmojiSuggestions(prefix, replacementPrefix)
+
+    return (unicodeEmojis || []).concat(markdownEmojis)
 
   getPrefix: (editor, bufferPosition) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
@@ -40,7 +48,7 @@ module.exports =
         rightLabel: word
       }
 
-  getMarkdownEmojiSuggestions: (prefix) ->
+  getMarkdownEmojiSuggestions: (prefix, replacementPrefix) ->
     words = fuzzaldrin.filter(emoji.list, prefix)
     for word in words
       emojiImageElement = emoji(word, @emojiFolder, 20)
@@ -50,6 +58,6 @@ module.exports =
 
       {
         text: word
-        replacementPrefix: prefix
+        replacementPrefix: replacementPrefix || prefix
         rightLabelHTML: emojiImageElement
       }
