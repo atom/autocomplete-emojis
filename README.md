@@ -28,7 +28,7 @@ Please make sure you have [autocomplete-plus](https://atom.io/packages/autocompl
 
 ## Scopes
 
-Please note that this package shows emoji suggestions in the scope below.
+Please note that this package shows emoji suggestions in the scopes below.
 
 * .source.gfm
 * .text.html
