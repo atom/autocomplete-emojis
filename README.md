@@ -26,8 +26,20 @@ Please make sure you have [autocomplete-plus](https://atom.io/packages/autocompl
   when you run the ```autocomplete-emojis:show-cheat-sheet``` command
 
 
+## Scopes
+
+Please note that this package shows emoji suggestions in the scope below.
+
+* .source.gfm
+* .text.html
+* .text.plain
+* .comment
+* .string
+
+
 ## Acknowledgements
 
 * [autocomplete-plus](https://atom.io/packages/autocomplete-plus) and
-  [its tutorial to create a new suggestion provider](https://github.com/atom-community/autocomplete-plus/wiki/Provider-API)
-  inspired me to create this package
+  [its document of the provider API](https://github.com/atom-community/autocomplete-plus/wiki/Provider-API)
+  inspired and helped me a lot to create this package
+* [gemoji](https://github.com/github/gemoji) gives [a JSON file](https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json) for unicode emojis
