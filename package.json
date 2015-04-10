@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "engines": {
-    "atom": ">=0.174.0 <2.0.0"
+    "atom": ">=0.189.0 <2.0.0"
   },
   "dependencies": {
     "emoji-images": "^0.1.1",
