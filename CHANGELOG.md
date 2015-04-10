@@ -1,3 +1,8 @@
+2.1.0 (Apr 11 2015)
+==================
+
+* Support unicode emojis as well as markdown emojis
+
 2.0.0 (Apr 8 2015)
 ==================
 
