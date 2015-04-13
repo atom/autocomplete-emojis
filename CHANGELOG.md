@@ -1,3 +1,8 @@
+2.2.0 (Apr 13 2015)
+==================
+
+* Enable provider in git commit scope (by @despairblue)
+
 2.1.0 (Apr 11 2015)
 ==================
 
