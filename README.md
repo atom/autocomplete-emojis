@@ -33,6 +33,7 @@ Please note that this package shows emoji suggestions in the scope below.
 * .source.gfm
 * .text.html
 * .text.plain
+* .text.git-commit
 * .comment
 * .string
 
