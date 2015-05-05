@@ -27,13 +27,15 @@ module.exports =
       replacementPrefix = prefix
       prefix = prefix.slice(1)
 
+    unicodeEmojis = []
     if atom.config.get('autocomplete-emojis.enableUnicodeEmojis') && not isMarkdownEmojiOnly
       unicodeEmojis = @getUnicodeEmojiSuggestions(prefix)
 
+    markdownEmojis = []
     if atom.config.get('autocomplete-emojis.enableMarkdownEmojis')
       markdownEmojis = @getMarkdownEmojiSuggestions(prefix, replacementPrefix)
 
-    return (unicodeEmojis || []).concat(markdownEmojis)
+    return unicodeEmojis.concat(markdownEmojis)
 
   getPrefix: (editor, bufferPosition) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])

@@ -31,6 +31,9 @@ describe "Emojis autocompletions", ->
   Object.keys(packagesToTest).forEach (packageLabel) ->
     describe "#{packageLabel} files", ->
       beforeEach ->
+        atom.config.set('autocomplete-emojis.enableUnicodeEmojis', true)
+        atom.config.set('autocomplete-emojis.enableMarkdownEmojis', true)
+
         waitsForPromise -> atom.packages.activatePackage(packagesToTest[packageLabel].name)
         waitsForPromise -> atom.workspace.open(packagesToTest[packageLabel].file)
         runs -> editor = atom.workspace.getActiveTextEditor()
@@ -91,6 +94,43 @@ describe "Emojis autocompletions", ->
         expect(completions[1].text).toBe ':smile:'
         expect(completions[1].replacementPrefix).toBe '::sm'
         expect(completions[1].rightLabelHTML).toMatch /smile\.png/
+
+      it "autocompletes unicode emojis with a proper prefix", ->
+        atom.config.set('autocomplete-emojis.enableUnicodeEmojis', true)
+        atom.config.set('autocomplete-emojis.enableMarkdownEmojis', false)
+
+        editor.setText """
+          :sm
+        """
+        editor.setCursorBufferPosition([0, 3])
+        completions = getCompletions()
+        expect(completions.length).toBe 49
+        expect(completions[ 0].text).toBe '😄'
+        expect(completions[ 0].replacementPrefix).toBe ':sm'
+
+      it "autocompletes markdown emojis with a proper prefix", ->
+        atom.config.set('autocomplete-emojis.enableUnicodeEmojis', false)
+        atom.config.set('autocomplete-emojis.enableMarkdownEmojis', true)
+
+        editor.setText """
+          :sm
+        """
+        editor.setCursorBufferPosition([0, 3])
+        completions = getCompletions()
+        expect(completions.length).toBe 47
+        expect(completions[ 0].text).toBe ':smirk:'
+        expect(completions[ 0].replacementPrefix).toBe ':sm'
+
+      it "autocompletes no emojis", ->
+        atom.config.set('autocomplete-emojis.enableUnicodeEmojis', false)
+        atom.config.set('autocomplete-emojis.enableMarkdownEmojis', false)
+
+        editor.setText """
+          :sm
+        """
+        editor.setCursorBufferPosition([0, 3])
+        completions = getCompletions()
+        expect(completions.length).toBe 0
 
   describe 'when the autocomplete-emojis:showCheatSheet event is triggered', ->
     workspaceElement = null
