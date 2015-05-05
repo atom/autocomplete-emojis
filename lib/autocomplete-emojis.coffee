@@ -1,9 +1,13 @@
 provider = require('./emojis-provider')
 
 module.exports =
-  configDefaults:
-    enableUnicodeEmojis: true
-    enableMarkdownEmojis: true
+  config:
+    enableUnicodeEmojis:
+      type: 'boolean'
+      default: true
+    enableMarkdownEmojis:
+      type: 'boolean'
+      default: true
 
   activate: ->
     provider.loadProperties()
