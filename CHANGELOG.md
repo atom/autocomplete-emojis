@@ -1,3 +1,9 @@
+2.2.1 (May 6 2015)
+==================
+
+* Fix a bug that disabled configs did not work as expected
+* Fix a Deprecation Cop warning to use config schema
+
 2.2.0 (Apr 13 2015)
 ==================
 
