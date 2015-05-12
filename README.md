@@ -1,6 +1,6 @@
-# autocomplete+ emojis suggestions [![Build Status](https://travis-ci.org/eqot/autocomplete-emojis.svg?branch=master)](https://travis-ci.org/eqot/autocomplete-emojis)
+# autocomplete+ emojis suggestions [![Build Status](https://travis-ci.org/atom/autocomplete-emojis.svg?branch=master)](https://travis-ci.org/atom/autocomplete-emojis)
 
-[View the changelog](https://github.com/eqot/autocomplete-emojis/blob/master/CHANGELOG.md)
+[View the changelog](https://github.com/atom/autocomplete-emojis/blob/master/CHANGELOG.md)
 
 Adds unicode emoji (like 😄) and markdown emoji (like ```:smile:```) autocompletion to autocomplete-plus.
 
