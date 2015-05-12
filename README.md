@@ -7,13 +7,6 @@ Adds unicode emoji (like 😄) and markdown emoji (like ```:smile:```) autocompl
 ![autocomplete-emojis](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/atom-autocomplete-emojis.gif)
 
 
-## Installation
-
-You can install autocomplete-emojis using the Preferences pane.
-
-Please make sure you have [autocomplete-plus](https://atom.io/packages/autocomplete-plus) installed as well.
-
-
 ## Features
 
 * Shows unicode and markdown emojis as suggestions when typing ```:``` and a word<br>
