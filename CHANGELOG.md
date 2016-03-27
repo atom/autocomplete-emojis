@@ -1,3 +1,8 @@
+2.3.0 (Mar 27 2016)
+==================
+
+* Add scope for emojicode (by @Streberpower)
+
 2.2.1 (May 6 2015)
 ==================
 
