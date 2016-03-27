@@ -29,6 +29,7 @@ Please note that this package shows emoji suggestions in the scopes below.
 * .text.git-commit
 * .comment
 * .string
+* .source.emojicode
 
 
 ## Acknowledgements
