@@ -1,7 +1,7 @@
 {
   "name": "autocomplete-emojis",
   "main": "./lib/autocomplete-emojis",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Adds emoji autocompletion to autocomplete+",
   "repository": {
     "type": "git",
