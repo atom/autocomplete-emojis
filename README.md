@@ -35,6 +35,6 @@ Please note that this package shows emoji suggestions in the scopes below.
 ## Acknowledgements
 
 * [autocomplete-plus](https://atom.io/packages/autocomplete-plus) and
-  [its document of the provider API](https://github.com/atom-community/autocomplete-plus/wiki/Provider-API)
+  [its document of the provider API](https://github.com/atom/autocomplete-plus/wiki/Provider-API)
   inspired and helped me a lot to create this package
 * [gemoji](https://github.com/github/gemoji) gives [a JSON file](https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json) for unicode emojis
