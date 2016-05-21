@@ -25,6 +25,7 @@ Please note that this package shows emoji suggestions in the scopes below.
 
 * .source.gfm
 * .text.html
+* .text.slim
 * .text.plain
 * .text.git-commit
 * .comment
