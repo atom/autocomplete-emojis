@@ -12,7 +12,7 @@ module.exports = function (grunt) {
     watch: {
       test: {
         files: ['lib/{,**/}*.coffee', 'spec/{,**/}*.coffee'],
-        tasks: ['coffee_jshint', 'test']
+        tasks: ['test']
       }
     },
     coffee_jshint: {
