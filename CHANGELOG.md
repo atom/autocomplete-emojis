@@ -1,3 +1,8 @@
+2.5.0 (May 28 2016)
+==================
+
+* Support .md file for language-markdown (by @plttn)
+
 2.4.0 (May 21 2016)
 ==================
 
@@ -6,7 +11,7 @@
 2.3.2 (May 21 2016)
 ==================
 
-* Update integrated modules
+* Update integrated modules (by @aatrostle)
 
 2.3.0 (Mar 27 2016)
 ==================

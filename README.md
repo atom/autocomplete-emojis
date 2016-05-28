@@ -24,6 +24,7 @@ Adds unicode emoji (like 😄) and markdown emoji (like ```:smile:```) autocompl
 Please note that this package shows emoji suggestions in the scopes below.
 
 * .source.gfm
+* .text.md
 * .text.html
 * .text.slim
 * .text.plain
