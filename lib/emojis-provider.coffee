@@ -4,7 +4,7 @@ fuzzaldrin = require('fuzzaldrin')
 emoji = require('emoji-images')
 
 module.exports =
-  selector: '.source.gfm, .text.md, .text.html, .text.slim, .text.plain, .text.git-commit, .comment, .string, .source.emojicode'
+  selector: '.source.gfm, .text.md, .text.restructuredtext, .text.html, .text.slim, .text.plain, .text.git-commit, .comment, .string, .source.emojicode'
 
   wordRegex: /::?[\w\d_\+-]+$/
   emojiFolder: 'atom://autocomplete-emojis/node_modules/emoji-images/pngs'
