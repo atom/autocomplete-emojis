@@ -4,7 +4,7 @@
 
 Adds unicode emoji (like 😄) and markdown emoji (like ```:smile:```) autocompletion to autocomplete-plus.
 
-![autocomplete-emojis](https://cloud.githubusercontent.com/assets/734194/24737109/d9578ab8-1a51-11e7-8866-dee82b916601.gif))
+![autocomplete-emojis](https://cloud.githubusercontent.com/assets/734194/24737109/d9578ab8-1a51-11e7-8866-dee82b916601.gif)
 
 
 ## Features
