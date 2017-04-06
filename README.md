@@ -4,17 +4,17 @@
 
 Adds unicode emoji (like 😄) and markdown emoji (like ```:smile:```) autocompletion to autocomplete-plus.
 
-![autocomplete-emojis](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/atom-autocomplete-emojis.gif)
+![autocomplete-emojis](https://cloud.githubusercontent.com/assets/734194/24737109/d9578ab8-1a51-11e7-8866-dee82b916601.gif))
 
 
 ## Features
 
 * Shows unicode and markdown emojis as suggestions when typing ```:``` and a word<br>
-　![smiley](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/atom-autocomplete-emojis-smiley.png)
+　![smiley](https://cloud.githubusercontent.com/assets/734194/24737071/a92871f4-1a51-11e7-970c-37ffbcca98e6.png)
 * Shows only markdown emojis when typing ```::``` and a word<br>
-　![markdown-smiley](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/atom-autocomplete-emojis-markdown-smiley.png)
+　![markdown-smiley](https://cloud.githubusercontent.com/assets/734194/24737069/a62ec976-1a51-11e7-914f-d1594f9f4d5d.png)
 * Disables unicode and/or markdown in the setting<br>
-　![settings](https://dl.dropboxusercontent.com/u/972960/Documents/atom/atom-autocomplete-emojis/atom-autocomplete-emojis-settings.png)
+　![settings](https://cloud.githubusercontent.com/assets/734194/24737070/a7a9b87e-1a51-11e7-9cc5-06be2b342a45.png)
 * Opens [Emoji Cheat Sheet](http://www.emoji-cheat-sheet.com/) for markdown emojis in browser
   when you run the ```autocomplete-emojis:show-cheat-sheet``` command
 
