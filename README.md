@@ -1,4 +1,5 @@
-# autocomplete+ emojis suggestions [![Build Status](https://travis-ci.org/atom/autocomplete-emojis.svg?branch=master)](https://travis-ci.org/atom/autocomplete-emojis)
+##### Atom and all repositories under Atom will be archived on December 15, 2022. Learn more in our [official announcement](https://github.blog/2022-06-08-sunsetting-atom/)
+ # autocomplete+ emojis suggestions [![Build Status](https://travis-ci.org/atom/autocomplete-emojis.svg?branch=master)](https://travis-ci.org/atom/autocomplete-emojis)
 
 [View the changelog](https://github.com/atom/autocomplete-emojis/blob/master/CHANGELOG.md)
 
